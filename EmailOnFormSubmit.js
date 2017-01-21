@@ -1,33 +1,22 @@
 function emailOnFormSubmit(e) {
 
-  //Datos del Formulario Partiendo de la etiqueta de tiempo
-  var timestamp = e.values[0];
-  var Membresia = e.values[1];
-  var Nombre 	= e.values[2];
-  var Empresa 	= e.values[3];
-  var Concepto 	= e.values[4];
-  var Forma 	= e.values[5];
-  var Pago 		= e.values[6];
-  var Cantidad 	= e.values[7];
-  var Email 	= e.values[8];
+  //Form data represented as an array, starting from the time tag imposed by default
+  var timestamp = e.values [ 0 ];
+  var value1Form = e.values [ 1 ];
+  var value2Form = e.values [ 2 ];
 
-  //Rellenar plantilla y exportar en PDF, a travez de una copia de google docs.
+  //Fill template of google docs and export in pdf.
   var TEMPLATE_ID = '13eFeunIWkRRKz8TpXLM5xzwkFNbjibShAV6o7m6Nd7c';
-  var PDF_FILE_NAME = "Recibo.pdf";
+  var PDF_FILE_NAME = "doc.pdf";
 
   var copyFile = DriveApp.getFileById(TEMPLATE_ID).makeCopy(),
 		copyId = copyFile.getId(),
-		copyDoc = DocumentApp.openById(copyId),
+		copyDoc = DocumentApp.openById (copyId),
 		copyBody = copyDoc.getActiveSection();
 
-  copyBody.replaceText('DIA',timestamp);
-  copyBody.replaceText('MEMBRESIA',Membresia);
-  copyBody.replaceText('NOMBRE',Nombre);
-  copyBody.replaceText('EMPRESA',Empresa);
-  copyBody.replaceText('CONCEPTO',Concepto);
-  copyBody.replaceText('FORMA',Forma);
-  copyBody.replaceText('PAGOO',Pago);
-  copyBody.replaceText('CANTIDAD',Cantidad);
+  copyBody.replaceText ('Tag_1', timestamp);
+  copyBody.replaceText ('Tag_2', value1Form);
+  copyBody.replaceText ('Tag_3', value2Form);
 
   copyDoc.saveAndClose();
 
@@ -40,13 +29,13 @@ function emailOnFormSubmit(e) {
 
 	copyFile.setTrashed(true);
 
-  // Estructura de Email y adjuntar documento PDF creado.
-  var subject = "Recibo de Pago REVO300";
-  var emailBody = "Hola, " + Nombre + "\n" +
-  "\nPor este medio me permito adjuntar recibo de pago.  A nombre de nuestro equipo, le reiteramos nuestro compromiso por ofrecerle el mejor servicio. Gracias por elegir a REVO300; es un privilegio servirle."+
-  "\nSaludos";
+  // Structure of email, enclosing pdf
+  var subject = "Lorem Email";
+  var emailBody = "Lorem, " + value1Form + "\n" +
+  "\nLorem"+
+  "\nLorem";
 
-  var advancedOpts = { name: "Recibo",attachments:[newFile] };
+  var advancedOpts = { name: "Doc PDF",attachments:[newFile] };
 
   MailApp.sendEmail(Email, subject, emailBody, advancedOpts);
   newFile.setTrashed(true);
