@@ -50,7 +50,7 @@ function emailOnFormSubmit(e) {
   "\n\nEs un privilegio servirle."+
   "\nSaludos.";
 
-  var advancedOpts = { name: "Recibo " + folio + " PDF",attachments:[newFile] };
+  var advancedOpts = { name: "Startup Hidalgo",attachments:[newFile] };
 
   MailApp.sendEmail(emailCliente, subject, emailBody, advancedOpts);
   newFile.setTrashed(true);
